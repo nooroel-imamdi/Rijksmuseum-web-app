@@ -9,7 +9,7 @@ Deze repository bevat de eindopdracht voor het vak *Web App From Scratch*, onder
 - [ ] Object model
 - [ ] Flowchart
 - [ ] Interaction Flow Diagram
-- [ ] IFFE
+- [ x ] IFFE
 - [ ] Template engine
 - [ ] Router
 - [ ] Overview
@@ -32,13 +32,13 @@ De Rijksmuseum API Collectie is een set van ruim 111.000 objectenbeschrijvingen 
 Bij de bouw van deze app wordt gebruikt gemaakt van ```handlebars```. ```Handlebars``` zorgt er in deze app voor dat data vanuit de Rijksmuseum API wordt vertaald naar een template. Daarmee is het mogelijk de data te verwerken en te gebruiken op de gewenste pagina's in de app.
 
 ## Router
-In de route af te handelen wordt er in deze app gebruikt gemaakt van ```routie.js```.
+Om de route af te handelen wordt er in deze app gebruikt gemaakt van ```routie.js```.
 
 *Routie is a javascript hash routing library. It is designed for scenarios when push state is not an option (IE8 support, static/Github pages, Phonegap, simple sites, etc). It is very tiny (800 bytes gzipped), and should be able to handle all your routing needs.*
 [Routie.js](http://projects.jga.me/routie/)
 
 ## Gebruiksaanwijzingen
-- 
+-
 
 ## Flow diagram
 
