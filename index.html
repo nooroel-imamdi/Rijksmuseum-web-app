@@ -20,6 +20,20 @@
 
       <span id="search-feedback"></span>
     </section>
+    <section id="random-paintings-output">
+
+    </section>
+
+  <!-- Handlebars -->
+  <script id="random-paintings-template" type="text/x-handlebars-template">
+		{{#each artObjects}}
+		<article>
+			<img src="{{webImage.url}}" />
+			<h1><a href="#paintings/{{objectNumber}}">{{title}}</a></h1>
+			<p>Kunstenaar: {{principalOrFirstMaker}}</p>
+		</article>
+		{{/each}}
+	</script>
 
   <!-- JavaScript -->
   <script type="text/javascript" src="assets/js/lib/handlebars-v4.0.5.js"></script>
