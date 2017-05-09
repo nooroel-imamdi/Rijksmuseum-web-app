@@ -14,12 +14,12 @@
     htmlElements: {
       userInputField: document.getElementById("user-input-field"),
       searchForm: document.getElementById("search-form"),
-      searchFeedback: document.getElementById("search-feedback")
+      searchFeedback: document.getElementById("search-feedback"),
+      randomPaintingTemplate: document.getElementById("random-paintings-template"),
+      randomPaintingOuput: document.getElementById("random-paintings-output")
     },
     init: function() {
       router.init();
-      collection.get();
-      collection.search();
     }
   };
 
@@ -52,16 +52,16 @@
 
       });
     },
-    get: function(userInput) {
-      console.log(userInput);
+    get: function() {
       var request = new window.XMLHttpRequest();
-      var url = app.config.BASE_URL + app.config.SEARCH_QUERY + userInput + app.config.API_KEY_QUERY;
+      var url = app.config.BASE_URL + app.config.SEARCH_QUERY + '' + app.config.API_KEY_QUERY;
 			request.open("GET", url, true);
 			request.onload = function() {
         if (request.status >= 200 && request.status < 400) {
           // Success!
           var data = JSON.parse(request.responseText);
           console.log(data);
+          renderHandlebars.randomPaintings(data);
           } else {
           // We reached our target server, but it returned an error
         }
@@ -75,6 +75,17 @@
 			request.send();
     }
   };
+
+  var renderHandlebars = {
+    randomPaintings: function(all) {
+      var rawTemplating = app.htmlElements.randomPaintingTemplate.innerHTML;
+			var compiledTemplate = Handlebars.compile(rawTemplating);
+			var ourGeneratedHTML = compiledTemplate(all);
+      var outputData = app.htmlElements.randomPaintingOutput;
+      console.log(outputData);
+      // outputData.innerHTML = ourGeneratedHTML;
+    }
+  }
 
   app.init();
 
