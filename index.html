@@ -20,8 +20,19 @@
 
       <span id="search-feedback"></span>
     </section>
-    <section id="random-paintings-output">
 
+    <section class="loader hide">
+        <div></div>
+    </section>
+
+    <section id="random-paintings-output" class="collection">
+    </section>
+
+    <section id="error" class="hide">
+      <article>
+        <h1>Oeps!</h1>
+        <p>Er is iets fout gegaan bij het laden van de data. Probeer het nogmaals.</p>
+      </article>
     </section>
 
   <!-- Handlebars -->
@@ -29,8 +40,10 @@
 		{{#each artObjects}}
 		<article>
 			<img src="{{webImage.url}}" />
-			<h1><a href="#paintings/{{objectNumber}}">{{title}}</a></h1>
-			<p>Kunstenaar: {{principalOrFirstMaker}}</p>
+      <header>
+  			<h1><a href="#paintings/{{objectNumber}}">{{title}}</a></h1>
+  			<p>Kunstenaar: {{principalOrFirstMaker}}</p>
+      </header>
 		</article>
 		{{/each}}
 	</script>
