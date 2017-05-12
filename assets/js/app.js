@@ -12,11 +12,13 @@
       paint: []
     },
     htmlElements: {
-      userInputField: document.getElementById("user-input-field"),
-      searchForm: document.getElementById("search-form"),
-      searchFeedback: document.getElementById("search-feedback"),
-      randomPaintingTemplate: document.getElementById("random-paintings-template"),
-      randomPaintingOuput: document.getElementById("random-paintings-output")
+      userInputField: document.querySelector("#user-input-field"),
+      searchForm: document.querySelector("#search-form"),
+      searchFeedback: document.querySelector("#search-feedback"),
+      randomPaintingTemplate: document.querySelector("#random-paintings-template"),
+      randomPaintingOuput: document.querySelector("#random-paintings-output"),
+      errorPage: document.querySelector("#error"),
+      loader: document.querySelector('.loader')
     },
     init: function() {
       router.init();
@@ -37,6 +39,16 @@
     }
   };
 
+  var sections = {
+    loaderState(state) {
+      if (state === 'show') {
+        app.htmlElements.loader.classList.remove('hide')
+      } else {
+        app.htmlElements.loader.classList.add('hide');
+      }
+    }
+  };
+
   var collection = {
     search: function() {
       // app.htmlElements.searchForm.addEventListener("submit", searchQuery)
@@ -53,6 +65,7 @@
       });
     },
     get: function() {
+      sections.loaderState('show');
       var request = new window.XMLHttpRequest();
       var url = app.config.BASE_URL + app.config.SEARCH_QUERY + '' + app.config.API_KEY_QUERY;
 			request.open("GET", url, true);
@@ -60,16 +73,33 @@
         if (request.status >= 200 && request.status < 400) {
           // Success!
           var data = JSON.parse(request.responseText);
-          console.log(data);
           renderHandlebars.randomPaintings(data);
+
+          setTimeout(function() {
+            sections.loaderState('hide');
+          }, 1000);
+          // var collectionObject = Object.keys(data).map(function (key) {
+          //   console.log(data);
+          //
+          //   return {
+          //     title: data.artObjects[key].title,
+          //   };
+          //
+          // });
+
+          // app.cache.paintings.push(collectionObject);
           } else {
           // We reached our target server, but it returned an error
+          sections.loaderState('hide');
         }
 
 			};
 
 			request.onerror = function() {
 			   // There was a connection error of some sort
+         sections.loaderState('hide');
+         // Show error page
+         app.htmlElements.errorPage.classList.remove('hide');
 			};
 
 			request.send();
@@ -81,12 +111,10 @@
       var rawTemplating = app.htmlElements.randomPaintingTemplate.innerHTML;
 			var compiledTemplate = Handlebars.compile(rawTemplating);
 			var ourGeneratedHTML = compiledTemplate(all);
-      var outputData = app.htmlElements.randomPaintingOutput;
-      console.log(outputData);
-      // outputData.innerHTML = ourGeneratedHTML;
+      var outputData = app.htmlElements.randomPaintingOuput;
+      outputData.innerHTML = ourGeneratedHTML;
     }
-  }
-
+  };
   app.init();
 
 })();
