@@ -1,8 +1,16 @@
+/* General stying */
 html, body{
   margin: 0;
   padding: 0;
 }
-header{
+body{
+  background: #F5F5F5;
+}
+.hide{
+  display: none;
+}
+/* Header */
+body > header{
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -19,8 +27,90 @@ header .logo{
   width: 11em;
   height: 1.9em;
 }
-
 .logo{
   background: url(../img/logo_rijksmuseum.svg) no-repeat center;
   background-size: 100%;
 }
+/* /General stying */
+/* Loader */
+.loader{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 150vh;
+    width: 100vw;
+    margin-top: -3em;
+    background-color: #1D2225;
+    z-index: 1000;
+    cursor: progress;
+}
+.loader > div {
+    position: relative;
+    top: 30%;
+    margin: 0 auto;
+    border: .6em solid #fff;
+    border-top: .6em solid #D73446;
+    border-radius: 50%;
+    width: 5em;
+    height: 5em;
+    animation: spin 1.5s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+/* /Loader */
+/* Collection */
+section{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 80%;
+  margin: 0 auto;
+}
+section.collection article{
+  background: #fff;
+  width: 30%;
+}
+section#error{
+  justify-content: center;
+}
+article{
+  position: relative;
+  align-self: center;
+  margin-bottom: 2em;
+  -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.07);
+  -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.07);
+  box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.07);
+  -webkit-transition: opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+article header{
+  width: 90%;
+  margin: 0 auto;
+}
+article a:after{
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+article a:hover:after{
+  -webkit-box-shadow: 4px 3px 5px 2px rgba(0,0,0,0.09);
+-moz-box-shadow: 4px 3px 5px 2px rgba(0,0,0,0.09);
+box-shadow: 4px 3px 5px 2px rgba(0,0,0,0.09);
+}
+article img{
+  width: 100%;
+}
+/* Collection */
+/* Error */
+.error{
+  display: none;
+}
+/* /Error */
