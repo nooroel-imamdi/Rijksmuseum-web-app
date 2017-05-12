@@ -10,14 +10,14 @@ Deze repository bevat de eindopdracht voor het vak *Web App From Scratch*, onder
 - [ ] Flowchart
 - [ ] Interaction Flow Diagram
 - [ x ] IFFE
-- [ ] Template engine
-- [ ] Router
-- [ ] Overview
+- [ x ] Template engine
+- [ x ] Router
+- [ x ] Overview
 - [ ] Detail
 - [ ] Filtering Features
 - [ ] Launcher app
 - [ ] Data manipulatie met filter/sort/map/reduce
-- [ ] Feedback data (laden en errors)
+- [ x ] Feedback data (laden en errors)
 - [ ] SPA online gehost
 
 
