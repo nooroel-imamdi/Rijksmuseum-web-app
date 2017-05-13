@@ -28,6 +28,9 @@
     <section id="random-paintings-output" class="collection">
     </section>
 
+    <section id="detail-painting-output" class="collection">
+    </section>
+
     <section id="error" class="hide">
       <article>
         <h1>Oeps!</h1>
@@ -38,14 +41,46 @@
   <!-- Handlebars -->
   <script id="random-paintings-template" type="text/x-handlebars-template">
 		{{#each artObjects}}
-		<article>
+		<article class="collection-item">
 			<img src="{{webImage.url}}" />
       <header>
-  			<h1><a href="#paintings/{{objectNumber}}">{{title}}</a></h1>
+  			<h1><a href="#paint/{{objectNumber}}">{{title}}</a></h1>
   			<p>Kunstenaar: {{principalOrFirstMaker}}</p>
       </header>
 		</article>
 		{{/each}}
+	</script>
+
+  <script id="detail-painting-template" type="text/x-handlebars-template">
+		<article class="detail-item">
+			<img src="{{artObject.webImage.url}}" />
+      <header>
+  			<h1>{{artObject.title}}</a></h1>
+  			<p>{{artObject.description}}</p>
+      </header>
+		</article>
+    <aside>
+      <h2>Over de schilder</h2>
+      <ul>
+        {{#each artObject.principalMakers}}
+        <li>Naam: {{name}}</li>
+        {{#if placeOfBirth}}
+        <li>Geboorteplaats: {{placeOfBirth}}</li>
+        {{/if}}
+        {{#if placeOfDeath}}
+        <li>Overlijdensplaats: {{placeOfDeath}}</li>
+        {{/if}}
+        {{/each}}
+      </ul>
+
+      <h2>Kleuren</h2>
+      Deze schilderij bevat de volgende kleuren
+      <ul class="color">
+        {{#each artObject.normalizedColors}}
+        <li><span style="background: {{this}};" class="color-block"></span>{{this}}</li>
+        {{/each}}
+      </ul>
+    </aside>
 	</script>
 
   <!-- JavaScript -->

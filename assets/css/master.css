@@ -69,9 +69,13 @@ section{
   width: 80%;
   margin: 0 auto;
 }
-section.collection article{
+article.collection-item{
   background: #fff;
   width: 30%;
+}
+article.detail-item{
+  background: #fff;
+  width: 50%;
 }
 section#error{
   justify-content: center;
@@ -114,3 +118,15 @@ article img{
   display: none;
 }
 /* /Error */
+/* Color block detailpage */
+aside ul.color{
+  text-transform: lowercase;
+}
+span.color-block{
+  display:inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: .5em;
+}
+
+/* /Color block detailpage */
