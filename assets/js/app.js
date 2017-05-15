@@ -50,15 +50,18 @@
       }
     },
     renderDetail(){
+      app.htmlElements.searchForm.classList.add('hide');
       app.htmlElements.randomPaintingOuput.classList.add('hide');
     }
+
   };
 
   var collection = {
     // search: function() {
     //   // app.htmlElements.searchForm.addEventListener('submit', searchQuery)
     //
-    //   app.htmlElements.searchForm.addEventListener('submit', function() {
+    //   app.htmlElements.searchForm.addEventListener('submit', function(e) {
+    //    e.preventDefault()
     //     var userInput = app.htmlElements.userInputField.value;
     //     console.log(userInput);
     //     collection.getRandom(userInput);
@@ -78,26 +81,37 @@
         if (request.status >= 200 && request.status < 400) {
           // Success!
           var data = JSON.parse(request.responseText);
+          console.log(data);
           renderHandlebars.randomPaintings(data);
 
           setTimeout(function() {
             sections.loaderState('hide');
           }, 1000);
-          // var collectionObject = Object.keys(data).map(function (key) {
-          //   console.log(data);
-          //
-          //   return {
-          //     title: data.artObjects[key].title,
-          //   };
-          //
-          // });
+          var collectionObject = Object.keys(data.artObjects).map(function (key) {
 
+            return {
+              title: data.artObjects[key].title,
+              paintUrl: data.artObjects[key].webImage.url,
+              painter: data.artObjects[key].principalOrFirstMaker,
+              objectNumber: data.artObjects[key].objectNumber
+            };
+
+          });
+          // app.cache.paintings.push(collectionObject);
+          // renderHandlebars.randomPaintings(collectionObject);
+
+          // console.log(collectionObject);
+
+          // var doubles = data.map(function(data) {
+          //   console.log(data);
+          //   // return title
+          // });
+          // console.log(doubles);
           // app.cache.paintings.push(collectionObject);
           } else {
           // We reached our targetRandom server, but it returned an error
           sections.loaderState('hide');
         }
-
 			};
 
 			request.onerror = function() {
@@ -155,6 +169,8 @@
 
   var renderHandlebars = {
     randomPaintings: function(all) {
+      console.log(all);
+      var data = app.cache.paintings;
       var rawTemplating = app.htmlElements.randomPaintingTemplate.innerHTML;
 			var compiledTemplate = Handlebars.compile(rawTemplating);
 			var ourGeneratedHTML = compiledTemplate(all);
@@ -169,6 +185,7 @@
       outputData.innerHTML = ourGeneratedHTML;
     },
   };
+  // console.log(app.cache.paintings);
   app.init();
 
 })();
