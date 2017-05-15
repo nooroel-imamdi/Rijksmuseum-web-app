@@ -4,11 +4,14 @@
     <meta charset="utf-8">
     <title>Rijksmuseum</title>
     <link rel="stylesheet" href="assets/css/master.css">
+    <link href="https://fonts.googleapis.com/css?family=Yrsa" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   </head>
 
   <body>
 
     <header>
+      <!-- <a href="" title="Vorige" class="back-button"></a> -->
       <a href="" title="Rijksmuseum" class="logo"></a>
     </header>
 
@@ -22,7 +25,20 @@
     </section>
 
     <section class="loader hide">
-        <div></div>
+        <section>
+          <div class="sk-cube-grid">
+            <div class="sk-cube sk-cube1"></div>
+            <div class="sk-cube sk-cube2"></div>
+            <div class="sk-cube sk-cube3"></div>
+            <div class="sk-cube sk-cube4"></div>
+            <div class="sk-cube sk-cube5"></div>
+            <div class="sk-cube sk-cube6"></div>
+            <div class="sk-cube sk-cube7"></div>
+            <div class="sk-cube sk-cube8"></div>
+            <div class="sk-cube sk-cube9"></div>
+          </div>
+          <span class="logo"></span>
+        </section>
     </section>
 
     <section id="random-paintings-output" class="collection">
@@ -42,10 +58,10 @@
   <script id="random-paintings-template" type="text/x-handlebars-template">
 		{{#each artObjects}}
 		<article class="collection-item">
-			<img src="{{webImage.url}}" />
+			<img src="{{paintUrl}}" />
       <header>
   			<h1><a href="#paint/{{objectNumber}}">{{title}}</a></h1>
-  			<p>Kunstenaar: {{principalOrFirstMaker}}</p>
+  			<p>Kunstenaar: {{painter}}</p>
       </header>
 		</article>
 		{{/each}}
