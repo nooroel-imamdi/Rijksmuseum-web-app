@@ -13,7 +13,7 @@ Deze repository bevat de eindopdracht voor het vak *Web App From Scratch*, onder
 - [ x ] Template engine
 - [ x ] Router
 - [ x ] Overview
-- [ ] Detail
+- [ x ] Detail
 - [ ] Filtering Features
 - [ ] Launcher app
 - [ ] Data manipulatie met filter/sort/map/reduce
@@ -53,3 +53,4 @@ Om de route af te handelen wordt er in deze app gebruikt gemaakt van ```routie.j
 - [Rijksmuseum API](https://www.rijksmuseum.nl/nl/api)
 - [Handlebars](http://handlebarsjs.com/)
 - [Routie](http://projects.jga.me/routie/)
+- [Loading spin Cube Grid](https://github.com/tobiasahlin/SpinKit/blob/master/examples/9-cube-grid.html)
