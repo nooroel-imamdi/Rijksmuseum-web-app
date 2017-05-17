@@ -57,21 +57,21 @@
   };
 
   var collection = {
-    // search: function() {
-    //   // app.htmlElements.searchForm.addEventListener('submit', searchQuery)
-    //
-    //   app.htmlElements.searchForm.addEventListener('submit', function(e) {
-    //    e.preventDefault()
-    //     var userInput = app.htmlElements.userInputField.value;
-    //     console.log(userInput);
-    //     collection.getRandom(userInput);
-    //
-    //     if (query.length > 0) {
-    //
-    //     }
-    //
-    //   });
-    // },
+    search: function() {
+      // app.htmlElements.searchForm.addEventListener('submit', searchQuery)
+
+      app.htmlElements.searchForm.addEventListener('submit', function(e) {
+        e.preventDefault()
+        var userInput = app.htmlElements.userInputField.value;
+        console.log(userInput);
+        collection.getRandom(userInput);
+
+        if (query.length > 0) {
+
+        }
+
+      });
+    },
     getRandom: function() {
       sections.loaderState('show');
       var request = new window.XMLHttpRequest();
@@ -81,33 +81,39 @@
         if (request.status >= 200 && request.status < 400) {
           // Success!
           var data = JSON.parse(request.responseText);
-          console.log(data);
-          renderHandlebars.randomPaintings(data);
+          // console.log(data);
+          // renderHandlebars.randomPaintings(data);
 
           setTimeout(function() {
             sections.loaderState('hide');
           }, 1000);
+
           var collectionObject = Object.keys(data.artObjects).map(function (key) {
 
             return {
               title: data.artObjects[key].title,
               paintUrl: data.artObjects[key].webImage.url,
               painter: data.artObjects[key].principalOrFirstMaker,
-              objectNumber: data.artObjects[key].objectNumber
+              objectNumber: data.artObjects[key].objectNumber,
+              hasImage: data.artObjects[key].hasImage
             };
 
           });
-          // app.cache.paintings.push(collectionObject);
-          // renderHandlebars.randomPaintings(collectionObject);
 
           // console.log(collectionObject);
 
-          // var doubles = data.map(function(data) {
-          //   console.log(data);
-          //   // return title
-          // });
-          // console.log(doubles);
           // app.cache.paintings.push(collectionObject);
+
+          var filterImage = collectionObject.filter(function(obj) {
+            // console.log(obj)
+            if (obj.hasImage == true) {
+              return app.cache.paintings
+            }
+          });
+          
+          app.cache.paintings.push(filterImage);
+          renderHandlebars.randomPaintings(filterImage);
+
           } else {
           // We reached our targetRandom server, but it returned an error
           sections.loaderState('hide');
@@ -168,12 +174,12 @@
   };
 
   var renderHandlebars = {
-    randomPaintings: function(all) {
-      console.log(all);
-      var data = app.cache.paintings;
+    randomPaintings: function() {
+      var collection = app.cache.paintings[0];
+      var collectionNew = {collection};
       var rawTemplating = app.htmlElements.randomPaintingTemplate.innerHTML;
 			var compiledTemplate = Handlebars.compile(rawTemplating);
-			var ourGeneratedHTML = compiledTemplate(all);
+			var ourGeneratedHTML = compiledTemplate(collectionNew);
       var outputData = app.htmlElements.randomPaintingOuput;
       outputData.innerHTML = ourGeneratedHTML;
     },
@@ -185,7 +191,5 @@
       outputData.innerHTML = ourGeneratedHTML;
     },
   };
-  // console.log(app.cache.paintings);
   app.init();
-
 })();
