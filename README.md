@@ -15,8 +15,7 @@ Deze repository bevat de eindopdracht voor het vak *Web App From Scratch*, onder
 - [x] Overview
 - [x] Detail
 - [ ] Filtering Features
-- [ ] Launcher app
-- [ ] Data manipulatie met filter/sort/map/reduce
+- [x] Data manipulatie met filter/sort/map/reduce
 - [x] Feedback data (laden en errors)
 - [ ] SPA online gehost
 
