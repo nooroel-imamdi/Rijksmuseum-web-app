@@ -11,7 +11,7 @@
   <body>
 
     <header>
-      <a href="" title="Vorige" class="back-button hide">Vorige</a>
+      <a href="" title="Terug" class="back-button hide">Terug</a>
       <a href="" title="Rijksmuseum" class="logo"></a>
     </header>
 
@@ -58,11 +58,9 @@
     <section id="painter-output" class="collection">
     </section>
 
-    <section id="error" class="hide">
-      <article>
+    <section class="error hide">
         <h1>Oeps!</h1>
-        <p>Er is iets fout gegaan bij het laden van de data. Probeer het nogmaals.</p>
-      </article>
+        <p>Er is een fout opgetreden bij het laden van de data. Probeer het nogmaals.</p>
     </section>
 
   <!-- Handlebars -->
@@ -71,8 +69,8 @@
 		<article class="collection-item">
 			<img src="{{paintUrl}}" />
       <header>
-  			<h1><a href="#paint/{{objectNumber}}">{{title}}</a></h1>
-  			<p>Kunstenaar: {{painter}}</p>
+  			<h1 class="paint-titel"><a href="#paint/{{objectNumber}}">{{title}}</a></h1>
+  			<p class="painter">Kunstenaar: {{painter}}</p>
       </header>
 		</article>
 		{{/each}}
@@ -83,8 +81,8 @@
 		<article class="collection-item">
 			<img src="{{paintUrl}}" />
       <header>
-  			<h1><a href="#paint/{{objectNumber}}">{{title}}</a></h1>
-  			<p>Kunstenaar: {{painter}}</p>
+  			<h1 class="paint-titel"><a href="#paint/{{objectNumber}}">{{title}}</a></h1>
+  			<p class="painter">Kunstenaar: {{painter}}</p>
       </header>
 		</article>
 		{{/each}}
@@ -95,8 +93,8 @@
 		<article class="collection-item">
 			<img src="{{paintUrl}}" />
       <header>
-  			<h1><a href="#paint/{{objectNumber}}">{{title}}</a></h1>
-  			<p>Kunstenaar: {{painter}}</p>
+  			<h1 class="paint-titel"><a href="#paint/{{objectNumber}}">{{title}}</a></h1>
+  			<p class="painter">Kunstenaar: {{painter}}</p>
       </header>
 		</article>
 		{{/each}}
