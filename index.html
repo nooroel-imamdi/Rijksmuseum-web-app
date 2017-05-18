@@ -47,6 +47,9 @@
     <section id="detail-painting-output" class="collection">
     </section>
 
+    <section id="painter-output" class="collection">
+    </section>
+
     <section id="error" class="hide">
       <article>
         <h1>Oeps!</h1>
@@ -56,6 +59,18 @@
 
   <!-- Handlebars -->
   <script id="random-paintings-template" type="text/x-handlebars-template">
+		{{#each collection}}
+		<article class="collection-item">
+			<img src="{{paintUrl}}" />
+      <header>
+  			<h1><a href="#paint/{{objectNumber}}">{{title}}</a></h1>
+  			<p>Kunstenaar: {{painter}}</p>
+      </header>
+		</article>
+		{{/each}}
+	</script>
+
+  <script id="painter-template" type="text/x-handlebars-template">
 		{{#each collection}}
 		<article class="collection-item">
 			<img src="{{paintUrl}}" />
