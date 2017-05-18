@@ -28,6 +28,7 @@ a:hover{
 }
 /* Header */
 body > header{
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -47,6 +48,17 @@ header .logo{
 .logo{
   background: url(../img/logo_rijksmuseum.svg) no-repeat center;
   background-size: 100%;
+}
+.back-button{
+  position: absolute;
+  top: .9em;
+  left: 2em;
+  background: #333;
+  color: #f5f5f5;
+  font-size: .8em;
+  display: inline-block;
+  padding: .8em 1em;
+  border-radius: 4px;
 }
 /* /General stying */
 /* Loader */
@@ -173,6 +185,7 @@ section.collection{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-content: center;
   flex-wrap: wrap;
   width: 80%;
   margin: 0 auto;
@@ -239,6 +252,12 @@ article img{
   width: 100%;
 }
 /* Collection */
+/* Empty search */
+.empty-result{
+  width: 60%;
+  margin: 0 auto;
+}
+/* /Empty search */
 /* Error */
 .error{
   display: none;
