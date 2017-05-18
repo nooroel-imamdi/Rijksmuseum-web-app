@@ -13,19 +13,25 @@
     htmlElements: {
       userInputField: document.querySelector('#user-input-field'),
       searchForm: document.querySelector('#search-form'),
-      searchFeedback: document.querySelector('#search-feedback'),
+      searchField: document.querySelector('#search-field'),
+      searchBtn: document.querySelector('#search-btn'),
+      searchFeedback: document.querySelector('.search-feedback'),
       randomPaintingTemplate: document.querySelector('#random-paintings-template'),
       randomPaintingOuput: document.querySelector('#random-paintings-output'),
+      searchTemplate: document.querySelector('#search-template'),
+      searchOutput: document.querySelector('#search-output'),
       detailPaintingTemplate: document.querySelector('#detail-painting-template'),
       detailPaintingOuput: document.querySelector('#detail-painting-output'),
       painterTemplate: document.querySelector('#painter-template'),
       painterOutput: document.querySelector('#painter-output'),
+      emptyResult: document.querySelector('.empty-result'),
       errorPage: document.querySelector('#error'),
-      loader: document.querySelector('.loader')
+      loader: document.querySelector('.loader'),
+      backBtn: document.querySelector('.back-button'),
     },
     init: function() {
       router.init();
-      collection.search();
+      search.init();
     }
   };
 
@@ -41,11 +47,12 @@
         },
         ':painter': function(painter) {
           collection.getPainter(painter);
-        }
+        },
       });
     }
   };
 
+  // Section for Initializing when a div has to disappear
   var sections = {
     loaderState(state) {
       if (state === 'show') {
@@ -54,49 +61,117 @@
         app.htmlElements.loader.classList.add('hide');
       }
     },
+    renderRandom() {
+      app.htmlElements.painterOutput.classList.add('hide');
+      app.htmlElements.detailPaintingOuput.classList.add('hide');
+      app.htmlElements.emptyResult.classList.add('hide');
+    },
+    renderSearch() {
+      app.htmlElements.randomPaintingOuput.classList.add('hide');
+      app.htmlElements.detailPaintingOuput.classList.add('hide');
+      app.htmlElements.emptyResult.classList.add('hide');
+    },
     renderDetail() {
-      app.htmlElements.searchForm.classList.add('hide');
+      // app.htmlElements.searchForm.classList.add('hide');
       app.htmlElements.randomPaintingOuput.classList.add('hide');
       app.htmlElements.painterOutput.classList.add('hide');
+      app.htmlElements.emptyResult.classList.add('hide');
+      app.htmlElements.detailPaintingOuput.classList.remove('hide');
+      app.htmlElements.searchOutput.classList.remove('hide');
+      app.htmlElements.backBtn.classList.remove('hide');
     },
     renderPainter() {
       app.htmlElements.searchForm.classList.add('hide');
       app.htmlElements.randomPaintingOuput.classList.add('hide');
       app.htmlElements.detailPaintingOuput.classList.add('hide');
+      app.htmlElements.emptyResult.classList.add('hide');
+    },
+  };
+
+  // Search
+  var search = {
+    init: function() {
+      var searchForm = app.htmlElements.searchForm;
+      var searchField = app.htmlElements.searchField;
+      searchForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        collection.getSearch(searchField.value);
+      });
     }
   };
 
   var collection = {
-    search: function() {
-      // app.htmlElements.searchForm.addEventListener('submit', searchQuery)
-        // console.log(app.htmlElements.searchForm.value);
-        app.htmlElements.searchForm.addEventListener('submit', function(e) {
-          e.preventDefault();
+    getSearch: function(searchQuery) {
+      console.log(searchQuery);
+      // Clears cache by every request
+      app.cache.paintings = [];
 
-        });
+      sections.loaderState('show');
+      sections.renderSearch();
+      var request = new window.XMLHttpRequest();
+      var url = app.config.BASE_URL + app.config.SEARCH_QUERY + searchQuery + '&' + app.config.API_KEY_QUERY;
+			request.open('GET', url, true);
+			request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+          // Success!
+          var data = JSON.parse(request.responseText);
 
-        console.log(app.htmlElements.searchForm.value);
+          if(data.artObjects.length === 0){
+            app.htmlElements.emptyResult.classList.remove('hide');
+          };
 
+          setTimeout(function() {
+            sections.loaderState('hide');
+          }, 1000);
 
+          // Filter on availability of image
+          var filterImage = data.artObjects.filter(function(obj) {
+            if (obj.showImage === true && obj.principalOrFirstMaker !== 'anoniem') {
+              return obj
+            }
+          });
 
-      // app.htmlElements.searchForm.addEventListener('submit', function(e) {
-      //   e.preventDefault()
-      //   var userInput = app.htmlElements.userInputField.value;
-      //   console.log(userInput);
-      //   collection.getRandom(userInput);
-      //
-      //   if (query.length > 0) {
-      //
-      //   }
-      //
-      // });
+          // Mapping objects to relevant values
+          var collectionObject = Object.keys(filterImage).map(function (key) {
+            return {
+              title: filterImage[key].title,
+              paintUrl: filterImage[key].webImage.url,
+              painter: filterImage[key].principalOrFirstMaker,
+              objectNumber: filterImage[key].objectNumber,
+              hasImage: filterImage[key].showImage
+            };
+          });
+
+          // Push data to cache
+          app.cache.paintings.push(collectionObject);
+
+          // Pass data to handlebars function
+          renderHandlebars.search(collectionObject);
+
+        } else {
+          // We reached our targetRandom server, but it returned an error
+          sections.loaderState('hide');
+          app.htmlElements.errorPage.classList.remove('hide');
+        }
+			};
+
+			request.onerror = function() {
+			   // There was a connection error of some sort
+         sections.loaderState('hide');
+         // Show error page
+         app.htmlElements.errorPage.classList.remove('hide');
+			};
+
+			request.send();
     },
+
     getRandom: function() {
 
       // clears cache by every request
       app.cache.paintings = [];
 
       sections.loaderState('show');
+      sections.renderRandom();
       var request = new window.XMLHttpRequest();
       var url = app.config.BASE_URL + app.config.SEARCH_QUERY + '' + '&' + app.config.API_KEY_QUERY;
 			request.open('GET', url, true);
@@ -129,7 +204,8 @@
 
           // Push data to cache
           app.cache.paintings.push(collectionObject);
-          renderHandlebars.painter(collectionObject);
+          // Pass data to handlebars function
+          renderHandlebars.randomPaintings(collectionObject);
 
         } else {
           // We reached our targetRandom server, but it returned an error
@@ -147,7 +223,12 @@
 
 			request.send();
     },
+
     getDetail: function(objectNumber) {
+
+      // clears cache by every request
+      app.cache.paintings = [];
+
       sections.loaderState('show');
       sections.renderDetail();
       var request = new window.XMLHttpRequest();
@@ -157,9 +238,9 @@
         if (request.status >= 200 && request.status < 400) {
           // Success!
           var data = JSON.parse(request.responseText);
+
           renderHandlebars.detailPainting(data);
 
-          console.log(data);
           setTimeout(function() {
             sections.loaderState('hide');
           }, 1000);
@@ -182,6 +263,7 @@
 
 			request.send();
     },
+
     getPainter: function(painter) {
 
       // clears cache by every request
@@ -221,6 +303,7 @@
 
           // Push data to cache
           app.cache.paintings.push(collectionObject);
+          // Pass data to handlebars function
           renderHandlebars.painter(collectionObject);
 
         } else {
@@ -242,6 +325,15 @@
   };
 
   var renderHandlebars = {
+    search: function() {
+      var collection = app.cache.paintings[0];
+      var collectionNew = {collection};
+      var rawTemplating = app.htmlElements.searchTemplate.innerHTML;
+			var compiledTemplate = Handlebars.compile(rawTemplating);
+			var ourGeneratedHTML = compiledTemplate(collectionNew);
+      var outputData = app.htmlElements.searchOutput;
+      outputData.innerHTML = ourGeneratedHTML;
+    },
     randomPaintings: function() {
       var collection = app.cache.paintings[0];
       var collectionNew = {collection};
@@ -267,13 +359,6 @@
       var outputData = app.htmlElements.painterOutput;
       outputData.innerHTML = ourGeneratedHTML;
     },
-    // painter: function(detail) {
-    //   var rawTemplating = app.htmlElements.detailPaintingTemplate.innerHTML;
-		// 	var compiledTemplate = Handlebars.compile(rawTemplating);
-		// 	var ourGeneratedHTML = compiledTemplate(detail);
-    //   var outputData = app.htmlElements.detailPaintingOuput;
-    //   outputData.innerHTML = ourGeneratedHTML;
-    // },
   };
   app.init();
 

@@ -11,17 +11,17 @@
   <body>
 
     <header>
-      <!-- <a href="" title="Vorige" class="back-button"></a> -->
+      <a href="" title="Vorige" class="back-button hide">Vorige</a>
       <a href="" title="Rijksmuseum" class="logo"></a>
     </header>
 
     <section class="search">
       <form id="search-form">
-        <input type="text" id="user-input-field" />
-        <button type="submit">Zoeken</button>
+        <input type="text" id="search-field" autocomplete="off" />
+        <button type="submit" id="search-btn">Zoeken</button>
       </form>
 
-      <span id="search-feedback"></span>
+      <span class="search-feedback"></span>
     </section>
 
     <section class="loader hide">
@@ -41,7 +41,15 @@
         </section>
     </section>
 
+    <section class="empty-result">
+      <h1>Helaas, uw zoekresultaat heeft niets opgeleverd.</h1>
+      <p>Probeer het opnieuw.</p>
+    </section>
+
     <section id="random-paintings-output" class="collection">
+    </section>
+
+    <section id="search-output" class="collection">
     </section>
 
     <section id="detail-painting-output" class="collection">
@@ -59,6 +67,18 @@
 
   <!-- Handlebars -->
   <script id="random-paintings-template" type="text/x-handlebars-template">
+		{{#each collection}}
+		<article class="collection-item">
+			<img src="{{paintUrl}}" />
+      <header>
+  			<h1><a href="#paint/{{objectNumber}}">{{title}}</a></h1>
+  			<p>Kunstenaar: {{painter}}</p>
+      </header>
+		</article>
+		{{/each}}
+	</script>
+
+  <script id="search-template" type="text/x-handlebars-template">
 		{{#each collection}}
 		<article class="collection-item">
 			<img src="{{paintUrl}}" />
