@@ -25,7 +25,7 @@
       painterTemplate: document.querySelector('#painter-template'),
       painterOutput: document.querySelector('#painter-output'),
       emptyResult: document.querySelector('.empty-result'),
-      errorPage: document.querySelector('#error'),
+      errorPage: document.querySelector('.error'),
       loader: document.querySelector('.loader'),
       backBtn: document.querySelector('.back-button'),
     },
@@ -116,6 +116,12 @@
           // Success!
           var data = JSON.parse(request.responseText);
 
+          if (searchQuery.length > 0) {
+        		app.htmlElements.searchFeedback.innerHTML = "U zocht op " + "'" + searchQuery + "'";
+        	} else{
+        		app.htmlElements.searchFeedback.innerHTML = "U heeft het zoekveld leeggelaten.";
+        	};
+
           if(data.artObjects.length === 0){
             app.htmlElements.emptyResult.classList.remove('hide');
           };
@@ -179,6 +185,7 @@
         if (request.status >= 200 && request.status < 400) {
           // Success!
           var data = JSON.parse(request.responseText);
+          console.log(data);
 
           setTimeout(function() {
             sections.loaderState('hide');
@@ -198,9 +205,29 @@
               paintUrl: filterImage[key].webImage.url,
               painter: filterImage[key].principalOrFirstMaker,
               objectNumber: filterImage[key].objectNumber,
-              hasImage: filterImage[key].showImage
+              showImage: filterImage[key].showImage
             };
           });
+
+          // Reduce objects amounts how many objects are available
+          var countObjects = data.artObjects.reduce(function (allNames, name) {
+            if (name in allNames) {
+              allNames[name]++;
+            }
+            else {
+              allNames[name] = 1;
+            }
+            return allNames;
+          }, {});
+
+          console.log(countObjects);
+
+          // Sort put paints on sequence according the width
+          var paintWidth = data.artObjects.sort(function (a, b) {
+            return a.webImage.width - b.webImage.width;
+          });
+
+          console.log(paintWidth);
 
           // Push data to cache
           app.cache.paintings.push(collectionObject);
