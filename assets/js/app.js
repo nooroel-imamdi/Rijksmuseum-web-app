@@ -8,8 +8,7 @@
       API_KEY_QUERY: 'key=' + apikey + '&format=json'
     },
     cache: {
-      paintings: [],
-      paint: []
+      paintings: []
     },
     htmlElements: {
       userInputField: document.querySelector('#user-input-field'),
@@ -19,11 +18,14 @@
       randomPaintingOuput: document.querySelector('#random-paintings-output'),
       detailPaintingTemplate: document.querySelector('#detail-painting-template'),
       detailPaintingOuput: document.querySelector('#detail-painting-output'),
+      painterTemplate: document.querySelector('#painter-template'),
+      painterOutput: document.querySelector('#painter-output'),
       errorPage: document.querySelector('#error'),
       loader: document.querySelector('.loader')
     },
     init: function() {
       router.init();
+      collection.search();
     }
   };
 
@@ -36,6 +38,9 @@
         },
         'paint/:objectNumber': function(objectNumber) {
           collection.getDetail(objectNumber);
+        },
+        ':painter': function(painter) {
+          collection.getPainter(painter);
         }
       });
     }
@@ -49,30 +54,48 @@
         app.htmlElements.loader.classList.add('hide');
       }
     },
-    renderDetail(){
+    renderDetail() {
       app.htmlElements.searchForm.classList.add('hide');
       app.htmlElements.randomPaintingOuput.classList.add('hide');
+      app.htmlElements.painterOutput.classList.add('hide');
+    },
+    renderPainter() {
+      app.htmlElements.searchForm.classList.add('hide');
+      app.htmlElements.randomPaintingOuput.classList.add('hide');
+      app.htmlElements.detailPaintingOuput.classList.add('hide');
     }
-
   };
 
   var collection = {
     search: function() {
       // app.htmlElements.searchForm.addEventListener('submit', searchQuery)
+        // console.log(app.htmlElements.searchForm.value);
+        app.htmlElements.searchForm.addEventListener('submit', function(e) {
+          e.preventDefault();
 
-      app.htmlElements.searchForm.addEventListener('submit', function(e) {
-        e.preventDefault()
-        var userInput = app.htmlElements.userInputField.value;
-        console.log(userInput);
-        collection.getRandom(userInput);
+        });
 
-        if (query.length > 0) {
+        console.log(app.htmlElements.searchForm.value);
 
-        }
 
-      });
+
+      // app.htmlElements.searchForm.addEventListener('submit', function(e) {
+      //   e.preventDefault()
+      //   var userInput = app.htmlElements.userInputField.value;
+      //   console.log(userInput);
+      //   collection.getRandom(userInput);
+      //
+      //   if (query.length > 0) {
+      //
+      //   }
+      //
+      // });
     },
     getRandom: function() {
+
+      // clears cache by every request
+      app.cache.paintings = [];
+
       sections.loaderState('show');
       var request = new window.XMLHttpRequest();
       var url = app.config.BASE_URL + app.config.SEARCH_QUERY + '' + '&' + app.config.API_KEY_QUERY;
@@ -81,42 +104,37 @@
         if (request.status >= 200 && request.status < 400) {
           // Success!
           var data = JSON.parse(request.responseText);
-          // console.log(data);
-          // renderHandlebars.randomPaintings(data);
 
           setTimeout(function() {
             sections.loaderState('hide');
           }, 1000);
 
-          var collectionObject = Object.keys(data.artObjects).map(function (key) {
-
-            return {
-              title: data.artObjects[key].title,
-              paintUrl: data.artObjects[key].webImage.url,
-              painter: data.artObjects[key].principalOrFirstMaker,
-              objectNumber: data.artObjects[key].objectNumber,
-              hasImage: data.artObjects[key].hasImage
-            };
-
-          });
-
-          // console.log(collectionObject);
-
-          // app.cache.paintings.push(collectionObject);
-
-          var filterImage = collectionObject.filter(function(obj) {
-            // console.log(obj)
-            if (obj.hasImage == true) {
-              return app.cache.paintings
+          // Filter on availability of image
+          var filterImage = data.artObjects.filter(function(obj) {
+            if (obj.showImage === true && obj.principalOrFirstMaker !== 'anoniem') {
+              return obj
             }
           });
-          
-          app.cache.paintings.push(filterImage);
-          renderHandlebars.randomPaintings(filterImage);
 
-          } else {
+          // Mapping objects to relevant values
+          var collectionObject = Object.keys(filterImage).map(function (key) {
+            return {
+              title: filterImage[key].title,
+              paintUrl: filterImage[key].webImage.url,
+              painter: filterImage[key].principalOrFirstMaker,
+              objectNumber: filterImage[key].objectNumber,
+              hasImage: filterImage[key].showImage
+            };
+          });
+
+          // Push data to cache
+          app.cache.paintings.push(collectionObject);
+          renderHandlebars.painter(collectionObject);
+
+        } else {
           // We reached our targetRandom server, but it returned an error
           sections.loaderState('hide');
+          app.htmlElements.errorPage.classList.remove('hide');
         }
 			};
 
@@ -145,19 +163,12 @@
           setTimeout(function() {
             sections.loaderState('hide');
           }, 1000);
-          // var collectionObject = Object.keys(data).map(function (key) {
-          //   console.log(data);
-          //
-          //   return {
-          //     title: data.artObjects[key].title,
-          //   };
-          //
-          // });
 
-          // app.cache.paintings.push(collectionObject);
-          } else {
-          // We reached our targetRandom server, but it returned an error
+        } else {
+          // There was a connection error of some sort
           sections.loaderState('hide');
+          // Show error page
+          app.htmlElements.errorPage.classList.remove('hide');
         }
 
 			};
@@ -170,7 +181,64 @@
 			};
 
 			request.send();
-    }
+    },
+    getPainter: function(painter) {
+
+      // clears cache by every request
+      app.cache.paintings = [];
+
+      sections.loaderState('show');
+      sections.renderPainter();
+      var request = new window.XMLHttpRequest();
+      var url = app.config.BASE_URL + app.config.SEARCH_QUERY + painter + '&' + app.config.API_KEY_QUERY;
+			request.open('GET', url, true);
+			request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+          // Success!
+          var data = JSON.parse(request.responseText);
+
+          setTimeout(function() {
+            sections.loaderState('hide');
+          }, 1000);
+
+          // Filter on availability of image
+          var filterImage = data.artObjects.filter(function(obj) {
+            if (obj.showImage === true) {
+              return obj
+            }
+          });
+
+          // Mapping objects to relevant values
+          var collectionObject = Object.keys(filterImage).map(function (key) {
+            return {
+              title: filterImage[key].title,
+              paintUrl: filterImage[key].webImage.url,
+              painter: filterImage[key].principalOrFirstMaker,
+              objectNumber: filterImage[key].objectNumber,
+              hasImage: filterImage[key].showImage
+            };
+          });
+
+          // Push data to cache
+          app.cache.paintings.push(collectionObject);
+          renderHandlebars.painter(collectionObject);
+
+        } else {
+          // We reached our targetRandom server, but it returned an error
+          sections.loaderState('hide');
+          app.htmlElements.errorPage.classList.remove('hide');
+        }
+			};
+
+			request.onerror = function() {
+			   // There was a connection error of some sort
+         sections.loaderState('hide');
+         // Show error page
+         app.htmlElements.errorPage.classList.remove('hide');
+			};
+
+			request.send();
+    },
   };
 
   var renderHandlebars = {
@@ -190,6 +258,23 @@
       var outputData = app.htmlElements.detailPaintingOuput;
       outputData.innerHTML = ourGeneratedHTML;
     },
+    painter: function() {
+      var collection = app.cache.paintings[0];
+      var collectionNew = {collection};
+      var rawTemplating = app.htmlElements.painterTemplate.innerHTML;
+			var compiledTemplate = Handlebars.compile(rawTemplating);
+			var ourGeneratedHTML = compiledTemplate(collectionNew);
+      var outputData = app.htmlElements.painterOutput;
+      outputData.innerHTML = ourGeneratedHTML;
+    },
+    // painter: function(detail) {
+    //   var rawTemplating = app.htmlElements.detailPaintingTemplate.innerHTML;
+		// 	var compiledTemplate = Handlebars.compile(rawTemplating);
+		// 	var ourGeneratedHTML = compiledTemplate(detail);
+    //   var outputData = app.htmlElements.detailPaintingOuput;
+    //   outputData.innerHTML = ourGeneratedHTML;
+    // },
   };
   app.init();
+
 })();
