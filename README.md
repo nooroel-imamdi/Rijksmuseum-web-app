@@ -50,10 +50,16 @@ Om de route af te handelen wordt er in deze app gebruikt gemaakt van ```routie.j
 
 ## Interaction Flow Diagram
 ![Interaction flow](https://github.com/nooroel-imamdi/web-app-from-scratch-her/blob/master/docs/user_opens_spa.png?raw=true)
+Diagram wanneer gebruiker SPA opent
+
 
 ![Interaction flow](https://github.com/nooroel-imamdi/web-app-from-scratch-her/blob/master/docs/user_search_form.png?raw=true)
+Diagram wanneer gebruiker zoekopdracht invoert
+
 
 ![Interaction flow](https://github.com/nooroel-imamdi/web-app-from-scratch-her/blob/master/docs/user_detail.png?raw=true)
+Diagram wanneer gebruiker kunst wil bekijken op detailpagina
+
 
 ## Features
 
