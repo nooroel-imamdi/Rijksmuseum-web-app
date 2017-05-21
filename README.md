@@ -6,9 +6,9 @@ Nooroel Imamdi | 500706701
 Deze repository bevat de eindopdracht voor het vak *Web App From Scratch*, onderdeel van de minor *Webdevelopment* aan de *Hogeschool van Amsterdam*.
 
 ## TO DO LIST
-- [ ] Object model
-- [ ] Flowchart
-- [ ] Interaction Flow Diagram
+- [x] Object model
+- [x] Flowchart
+- [x] Interaction Flow Diagram
 - [x] IFFE
 - [x] Template engine
 - [x] Router
@@ -37,13 +37,23 @@ Om de route af te handelen wordt er in deze app gebruikt gemaakt van ```routie.j
 [Routie.js](http://projects.jga.me/routie/)
 
 ## Gebruiksaanwijzingen
--
+- Open de applicatie en je ziet een random collectie verschijnen
+- Wil je opzoek naar het werk van een kunstenaar? Vul dan zijn naam in in de zoekbalk
+- Om de kunstwerken apart de bewonderen klik je op de desetreffende items
+- Wil je terug naar het overzicht? Klik dan op de terugbutton
 
-## Flow diagram
+## Flowchart
+[Flowchart](https://github.com/nooroel-imamdi/web-app-from-scratch-her/blob/master/docs/flowchart.png?raw=true)
 
+## SPA object model
+[Flowdiagram](https://github.com/nooroel-imamdi/web-app-from-scratch-her/blob/master/docs/flowdiagram.png?raw=true)
 
-## SPA diagram
+## Interaction Flow Diagram
+[Interaction flow](https://github.com/nooroel-imamdi/web-app-from-scratch-her/blob/master/docs/user_opens_spa.png?raw=true)
 
+[Interaction flow](https://github.com/nooroel-imamdi/web-app-from-scratch-her/blob/master/docs/user_search_form.png?raw=true)
+
+[Interaction flow](https://github.com/nooroel-imamdi/web-app-from-scratch-her/blob/master/docs/user_detail.png?raw=true)
 
 ## Features
 
