@@ -43,17 +43,17 @@ Om de route af te handelen wordt er in deze app gebruikt gemaakt van ```routie.j
 - Wil je terug naar het overzicht? Klik dan op de terugbutton
 
 ## Flowchart
-[Flowchart](https://github.com/nooroel-imamdi/web-app-from-scratch-her/blob/master/docs/flowchart.png?raw=true)
+![Flowchart](https://github.com/nooroel-imamdi/web-app-from-scratch-her/blob/master/docs/flowchart.png?raw=true)
 
 ## SPA object model
-[Flowdiagram](https://github.com/nooroel-imamdi/web-app-from-scratch-her/blob/master/docs/flowdiagram.png?raw=true)
+![Flowdiagram](https://github.com/nooroel-imamdi/web-app-from-scratch-her/blob/master/docs/flowdiagram.png?raw=true)
 
 ## Interaction Flow Diagram
-[Interaction flow](https://github.com/nooroel-imamdi/web-app-from-scratch-her/blob/master/docs/user_opens_spa.png?raw=true)
+![Interaction flow](https://github.com/nooroel-imamdi/web-app-from-scratch-her/blob/master/docs/user_opens_spa.png?raw=true)
 
-[Interaction flow](https://github.com/nooroel-imamdi/web-app-from-scratch-her/blob/master/docs/user_search_form.png?raw=true)
+![Interaction flow](https://github.com/nooroel-imamdi/web-app-from-scratch-her/blob/master/docs/user_search_form.png?raw=true)
 
-[Interaction flow](https://github.com/nooroel-imamdi/web-app-from-scratch-her/blob/master/docs/user_detail.png?raw=true)
+![Interaction flow](https://github.com/nooroel-imamdi/web-app-from-scratch-her/blob/master/docs/user_detail.png?raw=true)
 
 ## Features
 
