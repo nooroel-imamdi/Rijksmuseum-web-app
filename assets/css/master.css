@@ -164,13 +164,18 @@ section.search{
   justify-content: center;
   align-items: center;
   width: 80%;
-  margin: 2em auto 3em;
+  margin: 4em auto;
 }
 section form{
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 80%;
+  width: 60%;
+  -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.07);
+  -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.07);
+  box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.07);
+  -webkit-transition: opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 @media only screen and (max-width: 40em){
   section form{
@@ -181,16 +186,27 @@ section form{
   margin-top: 1em;
 }
 section form input{
-  width: 70%;
+  width: 100%;
   height: 2em;
-  padding: .5em;
+  padding: .8em 1em;
   font-size: 1em;
+  border: 0;
+}
+section form input:focus {
+  border: 0;
+  outline: 0;
+  -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.09);
+    -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.09);
+    box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.09);
+    -webkit-transition: opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 section form button{
   background: #333;
   color: #fff;
   border: 0;
   padding: 0 2em;
+  cursor: pointer;
 }
 /* /Search */
 /* Collection */
