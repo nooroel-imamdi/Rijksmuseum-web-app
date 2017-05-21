@@ -12,7 +12,7 @@
     },
     htmlElements: {
       userInputField: document.querySelector('#user-input-field'),
-      searchForm: document.querySelector('#search-form'),
+      searchForm: document.querySelector('.search'),
       searchField: document.querySelector('#search-field'),
       searchBtn: document.querySelector('#search-btn'),
       searchFeedback: document.querySelector('.search-feedback'),
@@ -72,12 +72,12 @@
       app.htmlElements.emptyResult.classList.add('hide');
     },
     renderDetail() {
-      // app.htmlElements.searchForm.classList.add('hide');
+      app.htmlElements.searchForm.classList.add('hide');
       app.htmlElements.randomPaintingOuput.classList.add('hide');
       app.htmlElements.painterOutput.classList.add('hide');
       app.htmlElements.emptyResult.classList.add('hide');
       app.htmlElements.detailPaintingOuput.classList.remove('hide');
-      app.htmlElements.searchOutput.classList.remove('hide');
+      app.htmlElements.searchOutput.classList.add('hide');
       app.htmlElements.backBtn.classList.remove('hide');
     },
     renderPainter() {
