@@ -191,6 +191,16 @@
             sections.loaderState('hide');
           }, 1000);
 
+          // document.querySelector('.imgonly').addEventListener('click', function(e) {
+          //   e.preventDefault();
+          //   var filterImage = data.artObjects.filter(function(obj) {
+          //     if (obj.showImage === true && obj.principalOrFirstMaker !== 'anoniem') {
+          //       return obj
+          //     }
+          //   });
+          //   console.log(filterImage);
+          // });
+
           // Filter on availability of image
           var filterImage = data.artObjects.filter(function(obj) {
             if (obj.showImage === true && obj.principalOrFirstMaker !== 'anoniem') {

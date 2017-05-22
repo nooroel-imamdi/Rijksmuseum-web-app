@@ -2,6 +2,8 @@
 html, body{
   margin: 0;
   padding: 0;
+  width: 100%;
+  height: 100%;
 }
 body{
   background: #F5F5F5;
@@ -72,10 +74,11 @@ header .logo{
   top: 0;
   left: 0;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   align-content: center;
+  width: 100%;
   height: 100vh;
   width: 100vw;
   background-color: #fff;
@@ -84,11 +87,11 @@ header .logo{
 }
 .loader section{
   position: absolute;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
   height: 50vh;
 }
 .loader .logo{
@@ -210,6 +213,12 @@ section form button{
 }
 /* /Search */
 /* Collection */
+h1.random-title{
+  width: 100%;
+  font-size: 2em;
+  text-align: center;
+  margin-bottom: 2em;
+}
 section.collection{
   display: flex;
   flex-direction: row;
