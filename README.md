@@ -14,10 +14,10 @@ Deze repository bevat de eindopdracht voor het vak *Web App From Scratch*, onder
 - [x] Router
 - [x] Overview
 - [x] Detail
-- [ ] Filtering Features
+- [x] Filtering Features
 - [x] Data manipulatie met filter/sort/map/reduce
 - [x] Feedback data (laden en errors)
-- [ ] SPA online gehost
+- [x] SPA online gehost
 
 
 ## Responsive Design (mobile first)
@@ -62,7 +62,8 @@ Diagram wanneer gebruiker kunst wil bekijken op detailpagina
 
 
 ## Features
-
+- Zoek naar je favoriete kunstenaar
+- Bekijk een kunstwerk in detail
 
 ## Sources
 - [Rijksmuseum API](https://www.rijksmuseum.nl/nl/api)
