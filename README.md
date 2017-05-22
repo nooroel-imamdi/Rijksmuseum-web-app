@@ -5,20 +5,8 @@ Nooroel Imamdi | 500706701
 ## Algemeen
 Deze repository bevat de eindopdracht voor het vak *Web App From Scratch*, onderdeel van de minor *Webdevelopment* aan de *Hogeschool van Amsterdam*.
 
-## TO DO LIST
-- [x] Object model
-- [x] Flowchart
-- [x] Interaction Flow Diagram
-- [x] IFFE
-- [x] Template engine
-- [x] Router
-- [x] Overview
-- [x] Detail
-- [x] Filtering Features
-- [x] Data manipulatie met filter/sort/map/reduce
-- [x] Feedback data (laden en errors)
-- [x] SPA online gehost
-
+## Live
+[Bekijk](http://imamovicdesign.com/minor/wafs/) de Single Page App.
 
 ## Responsive Design (mobile first)
 Deze app is opgebouwd volgens het principe *mobiele first*. Hierbij wordt de app vanuit mobiel opgebouwd naar een fluide website die op vrijwel alle apparaten toegankelijk is.
@@ -37,7 +25,7 @@ Om de route af te handelen wordt er in deze app gebruikt gemaakt van ```routie.j
 [Routie.js](http://projects.jga.me/routie/)
 
 ## Gebruiksaanwijzingen
-- Open de applicatie en je ziet een random collectie verschijnen
+- Open de [applicatie](http://imamovicdesign.com/minor/wafs/) en je ziet een random collectie verschijnen
 - Wil je opzoek naar het werk van een kunstenaar? Vul dan zijn naam in in de zoekbalk
 - Om de kunstwerken apart de bewonderen klik je op de desetreffende items
 - Wil je terug naar het overzicht? Klik dan op de terugbutton
@@ -60,10 +48,27 @@ Diagram wanneer gebruiker zoekopdracht invoert
 ![Interaction flow](https://github.com/nooroel-imamdi/web-app-from-scratch-her/blob/master/docs/user_detail.png?raw=true)
 Diagram wanneer gebruiker kunst wil bekijken op detailpagina
 
-
 ## Features
 - Zoek naar je favoriete kunstenaar
 - Bekijk een kunstwerk in detail
+
+## TO DO LIST
+- [x] Object model
+- [x] Flowchart
+- [x] Interaction Flow Diagram
+- [x] IFFE
+- [x] Template engine
+- [x] Router
+- [x] Overview
+- [x] Detail
+- [x] Filtering Features
+- [x] Data manipulatie met filter/sort/map/reduce
+- [x] Feedback data (laden en errors)
+- [x] SPA online gehost
+
+## Wishlist
+- [ ] Zoeken op basis van kleur
+- [ ] Zoekterm aan url doorgeven
 
 ## Sources
 - [Rijksmuseum API](https://www.rijksmuseum.nl/nl/api)
